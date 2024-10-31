@@ -22,9 +22,21 @@
   
   <section class="container">
     <div class="card mt-5">
-      <h5 class="card-header fw-bold text-center">Create Region</h5>
+      <h5 class="card-header fw-bold text-center">Create country</h5>
       <div class="card-body">
-        <form th:action="@{/region}" method="post" th:object="${region}">
+        <form th:action="@{/country}" method="post" th:object="${country}">
+          <div class="input-group flex-nowrap mb-3">
+            <span class="input-group-text fw-bold" id="addon-wrapping">
+              Code
+            </span>
+            <input type="text"
+              class="form-control"
+              placeholder="code"
+              aria-label="code"
+              aria-describedby="addon-wrapping"
+              th:field="*{code}" />
+          </div>
+
           <div class="input-group flex-nowrap mb-3">
             <span class="input-group-text fw-bold" id="addon-wrapping">
               Name
@@ -34,15 +46,27 @@
               placeholder="name"
               aria-label="name"
               aria-describedby="addon-wrapping"
-              th:field="*{name}"
-              required />
+              th:field="*{name}" />
+          </div>
+
+          <div class="input-group flex-nowrap mb-3">
+            <span class="input-group-text fw-bold" id="addon-wrapping">
+              Region
+            </span>
+            <select class="form-select" id="region" aria-label="regionId" name="regionId">
+              <option selected disabled>Choose...</option>
+              <option th:each="region : ${regions}"
+                th:value="${region.id}"
+                th:text="${region.name}"
+                ></option>
+            </select>        
           </div>
 
           <div class="mt-3 d-flex gap-2">
             <button type="submit" class="btn btn-success btn-sm fw-bold">
               Create
             </button>
-            <a href="/region" class="btn btn-secondary btn-sm fw-bold">
+            <a href="/country" class="btn btn-secondary btn-sm fw-bold">
               Back
             </a>
           </div>

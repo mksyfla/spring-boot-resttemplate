@@ -24,7 +24,7 @@
     <div class="card mt-5">
       <h5 class="card-header fw-bold text-center">Update Region</h5>
       <div class="card-body">
-        <form th:action="@{/region/update/__${prevRegion.id}__}" method="post" th:object="${region}">
+        <form th:action="@{/region/update/{id} (id=${prevRegion.id})}" th:method="PUT" th:object="${region}">
           <div class="input-group flex-nowrap">
             <span class="input-group-text fw-bold" id="addon-wrapping">
               Name

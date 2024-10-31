@@ -11,9 +11,11 @@ import com.example.client_app.service.RegionService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Slf4j
 @Controller
@@ -42,7 +44,7 @@ public class RegionController {
     return "redirect:/region";
   }
   
-  @PostMapping("/delete/{id}")
+  @DeleteMapping("/delete/{id}")
   public String delete(@PathVariable Integer id) {
     log.info(""+id);
 
@@ -58,7 +60,7 @@ public class RegionController {
     return "region/update-form";
   }
 
-  @PostMapping("/update/{id}")
+  @PutMapping("/update/{id}")
   public String update(@PathVariable Integer id, Region region) {
     log.info(""+id);
 

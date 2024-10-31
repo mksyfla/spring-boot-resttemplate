@@ -19,7 +19,6 @@
    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-
   <nav class="navbar navbar-expand-lg bg-body-tertiary px-3">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">SIBKM</a>
@@ -27,10 +26,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/region">Region</a>
+            <a class="nav-link" href="/region">Region</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/country">Country</a>
+            <a class="nav-link active" aria-current="page" href="/country">Country</a>
           </li>
         </ul>
       </div>
@@ -39,24 +38,29 @@
 
   <section class="container">
     <div class="my-4 d-flex justify-content-between align-items-center">
-      <h1 class="fw-bold">Detail of Region</h1>
+      <h1 class="fw-bold">Detail of Country</h1>
     </div>
 
     <table class="table table-bordered table-hover table-striped text-center mt-3">
       <thead class="table-dark">
         <tr>
-          <th class="col-2">Id</th>
-          <th class="col-4">Name</th>
-          <th class="col-6">Action</th>
+          <th class="col-1">Id</th>
+          <th class="col-3">Name</th>
+          <th class="col-1">Code</th>
+          <th class="col-3">Region</th>
+          <th class="col-4">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td th:text="${region.id}"></td>
-          <td th:text="${region.name}"></td>
+          <td th:text="${country.countryId}"></td>
+          <td th:text="${country.countryName}"></td>
+          <td th:text="${country.countryCode}"></td>
+          <td th:text="${country.regionName}"></td>
           <td class="d-flex justify-content-center gap-3">
-            <a th:href="@{/region/update/{id} (id=${region.id})}" class="btn btn-warning btn-sm">Update</a>
-            <form th:action="@{/region/delete/{id} (id=${region.id})}" th:method="DELETE">
+            <a th:href="@{/country/{id} (id=${country.countryId})}" class="btn btn-primary btn-sm">Detail</a>
+            <a th:href="@{/country/update/{id} (id=${country.countryId})}" class="btn btn-warning btn-sm">Update</a>
+            <form th:action="@{/country/delete/{id} (id=${country.countryId})}"  th:method="DELETE">
               <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Anda yakin ingin menghapus ini?')">Delete</button>
             </form>
           </td>
