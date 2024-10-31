@@ -20,10 +20,12 @@ import java.util.List;
 public class RegionService {
   private RestTemplate restTemplate;
 
-  public List<Region> getAll() {
+  public List<Region> getAll(String name) {
+    name = (name != null) ? name : "";
+    
     WebResponse<List<Region>> data = this.restTemplate
       .exchange(
-        "http://localhost:8080/region",
+        "http://localhost:8080/region/native?name=" + name,
         HttpMethod.GET,
         null,
         new ParameterizedTypeReference<WebResponse<List<Region>>>() {}

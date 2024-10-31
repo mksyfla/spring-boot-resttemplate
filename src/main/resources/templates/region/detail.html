@@ -38,9 +38,9 @@
         <td th:text="${region.id}"></td>
         <td th:text="${region.name}"></td>
         <td class="d-flex justify-content-center gap-3">
-          <a th:href="@{/region/update/__${region.id}__}" class="btn btn-warning btn-sm">Update</a>
-          <form th:action="@{/region/delete/__${region.id}__}" method="post">
-            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+          <a th:href="@{/region/update/{id} (id=${region.id})}" class="btn btn-warning btn-sm">Update</a>
+          <form th:action="@{/region/delete/{id} (id=${region.id})}" method="post">
+            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Anda yakin ingin menghapus ini?')">Delete</button>
           </form>
         </td>
       </tbody>
