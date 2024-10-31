@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.client_app.entity.Country;
-import com.example.client_app.entity.Region;
 import com.example.client_app.model.CountryResponse;
 import com.example.client_app.model.WebResponse;
 

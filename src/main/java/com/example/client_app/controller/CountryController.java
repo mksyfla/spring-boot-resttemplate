@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.client_app.entity.Country;
-import com.example.client_app.entity.Region;
 import com.example.client_app.model.CountryResponse;
 import com.example.client_app.service.CountryService;
 import com.example.client_app.service.RegionService;
