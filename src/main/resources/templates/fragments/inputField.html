@@ -1,0 +1,11 @@
+<div class="mb-3 row"  th:fragment="inputField(labelName, inputId, fieldName, inputType)">
+  <label th:for="${inputId}" class="col-sm-1 col-form-label fw-bold" th:text="${labelName}"></label>
+  <div class="col-sm-11">
+    <input th:type="${inputType}"
+      class="form-control"
+      th:placeholder="${labelName}"
+      th:id="${inputId}"
+      th:field="*{__${fieldName}__}"
+      required />
+  </div>
+</div>

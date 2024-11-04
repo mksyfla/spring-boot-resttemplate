@@ -65,9 +65,9 @@ public class CountryController {
     CountryResponse c = this.countryService.getById(id);
     Country country = new Country(c.getCountryId(), c.getCountryCode(), c.getCountryName(), c.getRegionId());
 
-    model.addAttribute("country", new Country());
+    model.addAttribute("country", country);
     model.addAttribute("regions", this.regionService.getAll(null));
-    model.addAttribute("prevCountry", country);
+    // model.addAttribute("prevCountry", country);
 
     return "country/update-form";
   }

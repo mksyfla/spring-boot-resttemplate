@@ -1,0 +1,13 @@
+<div class="mb-3 row" th:fragment="selectField(optionList, inputId)">
+  <label th:for="${inputId}" class="col-sm-1 col-form-label fw-bold">Region</label>
+  <div class="col-sm-11">
+    <select class="form-select" th:id="${inputId}" name="regionId">
+      <option disabled th:selected="${country.regionId == null}">Choose...</option>
+      <option th:each="region : __${optionList}__"
+        th:value="${region.id}"
+        th:text="${region.name}"
+        th:selected="${region.id == country.regionId}"
+        ></option>
+    </select>
+  </div>
+</div>

@@ -55,8 +55,7 @@ public class RegionController {
   @GetMapping("/update/{id}")
   public String updateView(@PathVariable Integer id, Model model) {
     Region region = this.regionService.getById(id);
-    model.addAttribute("region", new Region());
-    model.addAttribute("prevRegion", region);
+    model.addAttribute("region", region);
     return "region/update-form";
   }
 
