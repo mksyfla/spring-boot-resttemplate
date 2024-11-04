@@ -1,0 +1,6 @@
+<div class="container-fluid" th:fragment="searchBar(action)">
+  <form th:action="${action}" method="get" class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="name">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+</div>

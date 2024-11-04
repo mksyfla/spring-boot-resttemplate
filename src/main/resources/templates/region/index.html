@@ -10,12 +10,7 @@
       <a href="/region/create" class="btn btn-success btn-sm fw-bold">Add Region</a>
     </div>
 
-    <div class="container-fluid">
-      <form th:action="@{/region}" method="get" class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="name">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
+    <div th:replace="fragments/searchBar :: searchBar('/region')"></div>
 
     <table class="table table-bordered table-hover table-striped text-center mt-3">
       <thead class="table-dark">
