@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head th:replace="~{fragments/head :: head}"></head>
+  <body>
+    <nav th:replace="~{fragments/navbar :: nav('login')}"></nav>
+    
+    <div class="d-flex justify-content-center my-4">
+      <div class="card p-3" style="width: 35%;">
+        <div class="card-body text-center">
+          <p class="card-text fw-bold mb-4">Sign in</p>
+
+          <form th:action="@{/login}" method="post" class="row g-3 mt-4" th:object="${login}">
+            <div th:replace="~{fragments/inputField :: inputField('Username', 'username', 'username', 'text')}"></div>
+            <div th:replace="~{fragments/inputField :: inputField('Password', 'password', 'password', 'password')}"></div>
+
+            <div class="col text-center">
+              <button type="submit" class="btn btn-primary mb-3" style="width: 50%;">Login</button>
+            </div>
+          </form>
+          
+          <p class="card-text mt-3">Need an account? <a href="/register">Sign Up</a></p>
+        </div>
+      </div>
+    </div>
+    
+
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  </body>
+</html>

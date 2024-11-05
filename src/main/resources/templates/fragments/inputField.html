@@ -1,4 +1,4 @@
-<div class="mb-3 row"  th:fragment="inputField(labelName, inputId, fieldName, inputType)">
+<!-- <div class="mb-3 row"  th:fragment="inputField(labelName, inputId, fieldName, inputType)">
   <label th:for="${inputId}" class="col-sm-1 col-form-label fw-bold" th:text="${labelName}"></label>
   <div class="col-sm-11">
     <input th:type="${inputType}"
@@ -8,4 +8,16 @@
       th:field="*{__${fieldName}__}"
       required />
   </div>
+</div> -->
+
+<div class="form-floating"
+  th:fragment="inputField(labelName, inputId, fieldName, inputType)">
+  
+  <input class="form-control"
+    th:type="${inputType}"
+    th:id="${inputId}"
+    th:placeholder="${labelName}"
+    th:field="*{__${fieldName}__}"
+    required />
+  <label th:for="${inputId}" th:text="${labelName}"></label>
 </div>
