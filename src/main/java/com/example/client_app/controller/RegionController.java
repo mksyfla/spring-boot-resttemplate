@@ -30,7 +30,18 @@ public class RegionController {
 
     model.addAttribute("regions", this.regionService.getAll(name));
     model.addAttribute("isActive", "region");
-    return "region/index";
+    return "region/ajax/index";
+    // return "region/index";
+  }
+  
+  @GetMapping("/ajax")
+  public String getAllAjax(@RequestParam(required = false) String name, Model model) {
+    log.info("query parameter: " + name);
+
+    model.addAttribute("regions", this.regionService.getAll(name));
+    model.addAttribute("isActive", "region");
+    return "region/ajax/index";
+    // return "region/index";
   }
   
   @GetMapping("/create")
