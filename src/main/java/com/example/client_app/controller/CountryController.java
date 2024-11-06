@@ -31,6 +31,7 @@ public class CountryController {
     log.info("query parameter: " + name);
 
     model.addAttribute("countries", this.countryService.getAll(name));
+    model.addAttribute("isActive", "country");
     return "country/index";
   }
 

@@ -29,6 +29,7 @@ public class RegionController {
     log.info("query parameter: " + name);
 
     model.addAttribute("regions", this.regionService.getAll(name));
+    model.addAttribute("isActive", "region");
     return "region/index";
   }
   

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary px-3" th:fragment="nav(page)">
+<nav class="navbar navbar-expand-lg bg-body-tertiary px-3">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">SIBKM</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,13 +8,19 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a th:class="${page} == 'region' ? 'nav-link active fw-bold' : 'nav-link'" href="/region">Region</a>
+          <a class="nav-link"
+            th:classappend="${isActive} == 'region' ? 'active fw-bold' : ''"
+            href="/region">Region</a>
         </li>
         <li class="nav-item">
-          <a th:class="${page} == 'country' ? 'nav-link active fw-bold' : 'nav-link'" href="/country">Country</a>
+          <a class="nav-link"
+            th:classappend="${isActive} == 'country' ? 'active fw-bold' : ''"
+            href="/country">Country</a>
         </li>
       </ul>
-      <a th:class="${page} == 'login' ? 'nav-link active fw-bold' : 'nav-link'" href="/login">Login</a>
+      <a class="nav-link"
+        th:classappend="${isActive} == 'login' ? 'active fw-bold' : ''"
+        href="/login">Login</a>
     </div>
   </div>
 </nav>

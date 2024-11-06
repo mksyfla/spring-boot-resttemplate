@@ -26,6 +26,7 @@ public class AuthController {
   @GetMapping("/login")
   public String loginView(Model model) {
     model.addAttribute("login", new Login());
+    model.addAttribute("isActive", "login");
     return "auth/login";
   }
   
