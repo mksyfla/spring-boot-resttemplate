@@ -32,7 +32,7 @@ public class CountryController {
 
     model.addAttribute("countries", this.countryService.getAll(name));
     model.addAttribute("isActive", "country");
-    return "country/index";
+    return "country/ajax/index";
   }
 
   @GetMapping("/create")

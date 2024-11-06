@@ -34,15 +34,16 @@
               <h1 class="modal-title fs-5" id="createRegionLabel">Add Region</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="row g-3" method="post">
+            <form class="row g-3 was-validated" method="post">
               <div class="modal-body">
                 <div class="form-floating">
                   <input class="form-control"
                     type="text"
-                    id="create-name"
+                    id="create-name-region"
                     placeholder="name"
                     required />
-                  <label for="create-name">Name</label>
+                  <label for="create-name-region">Name</label>
+                  <div class="invalid-feedback">Please fill the name</div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -62,20 +63,21 @@
               <h1 class="modal-title fs-5" id="updateRegionLabel">Update Region</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="row g-3" method="post">
+            <form class="row g-3 was-validated" method="post">
               <div class="modal-body">
                 <input class="form-control"
                   type="text"
-                  id="update-id"
+                  id="update-id-region"
                   hidden
                   required />
                 <div class="form-floating">
                   <input class="form-control"
                     type="text"
-                    id="update-name"
+                    id="update-name-region"
                     placeholder="name"
                     required />
-                  <label for="update-name">Name</label>
+                  <label for="update-name-region">Name</label>
+                  <div class="invalid-feedback">Please fill the name</div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -108,9 +110,9 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td id="detail-id"></td>
-                      <td id="detail-name"></td>
-                      <td id="detail-action" class="d-flex justify-content-center gap-3"></td>
+                      <td id="detail-id-region"></td>
+                      <td id="detail-name-region"></td>
+                      <td id="detail-action-region" class="d-flex justify-content-center gap-3"></td>
                     </tr>
                   </tbody>
                 </table>

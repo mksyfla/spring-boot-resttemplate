@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/main}"
+  lang="en">
+
+  <head>
+    <title>Country</title>
+  </head>
+  <body>
+
+    <section class="container" layout:fragment="content">
+      <div class="my-4 d-flex justify-content-between align-items-center">
+        <h1 class="fw-bold">List of Country</h1>
+        <button
+          type="button"
+          class="btn btn-success btn-sm fw-bold"
+          data-bs-toggle="modal"
+          data-bs-target="#create-country"
+          onclick="createCountry()">Add Country</button>
+      </div>
+
+      <table class="table table-bordered table-hover table-striped text-center mt-3" id="tb-country">
+        <thead class="table-dark">
+          <tr>
+            <th class="col-1">No</th>
+            <th class="col-3">Name</th>
+            <th class="col-1">Code</th>
+            <th class="col-3">Region</th>
+            <th class="col-4">Action</th>
+          </tr>
+        </thead>
+      </table>
+
+      <!-- Create Country Modal -->
+      <div class="modal fade" id="create-country" tabindex="-1" aria-labelledby="createCountryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="createCountryLabel">Add Country</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post">
+              <div class="row g-3 modal-body was-validated">
+
+                <div class="form-floating">
+                  <input class="form-control"
+                    type="text"
+                    id="create-code-country"
+                    placeholder="code"
+                    required />
+                  <label for="create-code-country">Code</label>
+                  <div class="invalid-feedback">Please fill the code</div>
+                </div>
+
+                <div class="form-floating">
+                  <input class="form-control"
+                    type="text"
+                    id="create-name-country"
+                    placeholder="name"
+                    required />
+                  <label for="create-name-country">Name</label>
+                  <div class="invalid-feedback">Please fill the name</div>
+                </div>
+                
+                <div class="form-floating">
+                  <select class="form-select"
+                    id="create-region-country"
+                    name="regionId"
+                    required>
+                  </select>
+                  <label for="create-region-country">Region</label>
+                  <div class="invalid-feedback">Please select the region</div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="create-country-button">Create</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Update Country Modal -->
+      <div class="modal fade" id="update-country" tabindex="-1" aria-labelledby="updateCountryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="updateCountryLabel">Update Country</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form method="post">
+              <div class="row g-3 modal-body was-validated">
+                <input class="form-control" type="text" id="update-id-country" hidden required />
+
+                <div class="form-floating">
+                  <input class="form-control"
+                    type="text"
+                    id="update-code-country"
+                    placeholder="code" required />
+                  <label for="update-code-country">Code</label>
+                  <div class="invalid-feedback">Please fill the code</div>
+                </div>
+
+                <div class="form-floating">
+                  <input class="form-control"
+                    type="text"
+                    id="update-name-country"
+                    placeholder="name" required />
+                  <label for="update-name-country">Name</label>
+                  <div class="invalid-feedback">Please fill the name</div>
+                </div>
+
+                <div class="form-floating" id="">
+                  <select class="form-select"
+                    id="update-region-country"
+                    name="regionId"
+                    required>
+                  </select>
+                  <label for="update-region-country">Region</label>
+                  <div class="invalid-feedback">Please select the region</div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button"
+                  class="btn btn-primary"
+                  id="update-country-button">Update</button>
+                <button type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal">Back</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Detail Country Modal -->
+      <div class="modal fade" id="detail-country" tabindex="-1" aria-labelledby="detailCountryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="detailCountryLabel">Detail Country</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="row g-3" method="post">
+              <div class="modal-body">
+      
+                <table class="table table-bordered table-hover table-striped text-center mt-3">
+                  <thead class="table-dark">
+                    <tr>
+                      <th class="col-1">No</th>
+                      <th class="col-3">Name</th>
+                      <th class="col-1">Code</th>
+                      <th class="col-3">Region</th>
+                      <th class="col-4">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td id="detail-id-country"></td>
+                      <td id="detail-name-country"></td>
+                      <td id="detail-code-country"></td>
+                      <td id="detail-region-country"></td>
+                      <td id="detail-action-country" class="d-flex justify-content-center gap-3"></td>
+                    </tr>
+                  </tbody>
+                </table>
+      
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="update-country-button">Create</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <script src="/js/country.js" layout:fragment="js"></script>
+
+  </body>
+</html>

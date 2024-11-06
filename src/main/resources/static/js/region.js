@@ -1,4 +1,4 @@
-$(document).ready(async () => {
+$(document).ready(() => {
   $("#tb-region").DataTable({
     ajax: {
       method: "GET",
@@ -8,19 +8,18 @@ $(document).ready(async () => {
     columnDefs: [{ className: "text-center", targets: "_all" }],
     columns: [
       {
-        data: "id"
+        data: null,
+        render: (data, type, full, meta) => meta.row + 1
       },
-      {
-        data: "name"
-      },
+      { data: "name" },
       {
         data: null,
         render: (data) => `
           <div class="d-flex justify-content-center gap-3">
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detail-region" onclick=getById(${data.id})>
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detail-region" onclick=getRegionById(${data.id})>
               Detail
             </button>
-            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#update-region" onclick=beforeUpdate(${data.id})>
+            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#update-region" onclick=prevRegion(${data.id})>
               Update
             </button>
             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-region" onclick=deleteRegion(${data.id})>
@@ -29,25 +28,16 @@ $(document).ready(async () => {
           </div>
         `
       }
-    ]
+    ],
   });
 });
 
 $("#create-region-button").click(async (event) => {
   event.preventDefault();
 
-  const name = $("#create-name").val();
+  const name = $("#create-name-region").val();
   
-  if (name === "" || name === null) {
-    Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Please fill the emplty field!!!",
-      showConfirmButton: false,
-      timer: 1000
-    });
-    return
-  }
+  if (name === "" || name === null) return;
   
   const data = JSON.stringify({ name });
   
@@ -65,17 +55,17 @@ $("#create-region-button").click(async (event) => {
     timer: 1000,
   });
   
-  $("#create-name").val("");
+  $("#create-name-region").val("");
 });
 
-async function getById(id) {
+async function getRegionById(id) {
   const settings = new Settings("GET", `/api/region/${id}`, "json", "application/json");
   const res = await requestAjax(settings);
 
-  $("#detail-id").html(res.id);
-  $("#detail-name").html(res.name);
-  $("#detail-action").html(`
-    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#update-region" onclick=beforeUpdate(${res.id})>
+  $("#detail-id-region").html(res.id);
+  $("#detail-name-region").html(res.name);
+  $("#detail-action-region").html(`
+    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#update-region" onclick=prevRegion(${res.id})>
       Update
     </button>
     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-region" onclick=deleteRegion(${res.id})>
@@ -84,30 +74,21 @@ async function getById(id) {
   `);
 }
 
-async function beforeUpdate(id) {
+async function prevRegion(id) {
   const settings = new Settings("GET", `/api/region/${id}`, "json", "application/json");
   const res = await requestAjax(settings);
 
-  $("#update-id").val(res.id);
-  $("#update-name").val(res.name);
+  $("#update-id-region").val(res.id);
+  $("#update-name-region").val(res.name);
 }
 
 $("#update-region-button").click(async (event) => {
   event.preventDefault();
 
-  const id = $("#update-id").val();
-  const name = $("#update-name").val();
+  const id = $("#update-id-region").val();
+  const name = $("#update-name-region").val();
   
-  if (name === "" || name === null) {
-    Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Please fill the emplty field!!!",
-      showConfirmButton: false,
-      timer: 1000
-    });
-    return
-  }
+  if (name === "" || name === null) return;
 
   const data = JSON.stringify({ name });
 
@@ -125,12 +106,12 @@ $("#update-region-button").click(async (event) => {
     timer: 1000,
   });
   
-  $("#update-id").val("");
-  $("#update-name").val("");
+  $("#update-id-region").val("");
+  $("#update-name-region").val("");
 });
 
 async function deleteRegion(id) {
-  const confirmationButton = Swal.mixin({
+  const conButton = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success btn-sm ms-3",
       cancelButton: "btn btn-danger btn-sm"
@@ -138,7 +119,7 @@ async function deleteRegion(id) {
     buttonStyling: false,
   });
 
-  const conResult = await confirmationButton.fire({
+  const conResult = await conButton.fire({
     text: "Are you sure want to delete this?",
     icon: "warning",
     showCancelButton: true,
@@ -153,15 +134,15 @@ async function deleteRegion(id) {
 
     $("#tb-region").DataTable().ajax.reload();
 
-    swalWithBootstrapButtons.fire({
+    conButton.fire({
       title: "Deleted!",
-      text: "Your Region has been deleted.",
+      text: "Your region has been deleted.",
       icon: "success",
     });
   } else if (conResult.dismiss === Swal.DismissReason.cancel) {
-    swalWithBootstrapButtons.fire({
+    conButton.fire({
       title: "Cancelled",
-      text: "Your Region is safe :)",
+      text: "Your region will not be deleted",
       icon: "error",
     });
   }
