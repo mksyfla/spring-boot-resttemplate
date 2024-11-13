@@ -18,9 +18,16 @@
             href="/country">Country</a>
         </li>
       </ul>
-      <a class="nav-link"
-        th:classappend="${isActive} == 'login' ? 'active fw-bold' : ''"
-        href="/login">Login</a>
+      <div>
+        <form action="/logout" method="post" th:if="${isAuth}">
+          <button class="nav-link" type="submit">Logout</button>
+        </form>
+
+        <a class="nav-link"
+          th:unless="${isAuth}"
+          th:classappend="${isActive} == 'login' ? 'active fw-bold' : ''"
+          href="/login">Login</a>
+      </div>
     </div>
   </div>
 </nav>

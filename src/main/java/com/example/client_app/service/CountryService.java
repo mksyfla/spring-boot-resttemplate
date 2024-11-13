@@ -2,10 +2,12 @@ package com.example.client_app.service;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.client_app.config.CookiesStore;
 import com.example.client_app.entity.Country;
 import com.example.client_app.model.CountryResponse;
 import com.example.client_app.model.WebResponse;
@@ -14,12 +16,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class CountryService {
   private RestTemplate restTemplate;
+  private CookiesStore cookiesStore;
 
   public List<CountryResponse> getAll(String name) {
     name = (name != null) ? name : "";
@@ -28,7 +32,7 @@ public class CountryService {
       .exchange(
         "http://localhost:8080/country?name=" + name,
         HttpMethod.GET,
-        null,
+        new HttpEntity<Country>(this.CookieHeader()),
         new ParameterizedTypeReference<WebResponse<List<CountryResponse>>>() {}
       )
       .getBody();
@@ -41,7 +45,7 @@ public class CountryService {
       .exchange(
         "http://localhost:8080/country",
         HttpMethod.POST,
-        new HttpEntity<Country>(country),
+        new HttpEntity<Country>(country, this.CookieHeader()),
         new ParameterizedTypeReference<WebResponse<CountryResponse>>() {}
       )
       .getBody();
@@ -54,7 +58,7 @@ public class CountryService {
       .exchange(
         "http://localhost:8080/country/"+id,
         HttpMethod.DELETE,
-        null,
+        new HttpEntity<Country>(this.CookieHeader()),
         new ParameterizedTypeReference<WebResponse<CountryResponse>>() {}
       )
       .getBody();
@@ -67,7 +71,7 @@ public class CountryService {
       .exchange(
         "http://localhost:8080/country/" + id,
         HttpMethod.GET,
-        null,
+        new HttpEntity<Country>(this.CookieHeader()),
         new ParameterizedTypeReference<WebResponse<CountryResponse>>() {}
       )
       .getBody();
@@ -83,11 +87,19 @@ public class CountryService {
     .exchange(
       "http://localhost:8080/country/"+id,
       HttpMethod.PUT,
-      new HttpEntity<Country>(country),
+      new HttpEntity<Country>(country, this.CookieHeader()),
       new ParameterizedTypeReference<WebResponse<CountryResponse>>() {}
     )
     .getBody();
 
     return data.getPayload();
+  }
+
+  public HttpHeaders CookieHeader() {
+    String cookie = cookiesStore.getCookie();
+    HttpHeaders headers = new HttpHeaders();
+    headers.add(HttpHeaders.COOKIE, cookie);
+
+    return headers;
   }
 }

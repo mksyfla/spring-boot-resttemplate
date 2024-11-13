@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.client_app.config.CookiesStore;
 import com.example.client_app.entity.Region;
 import com.example.client_app.service.RegionService;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/region")
 public class RegionController {
   private RegionService regionService;
+  private CookiesStore cookiesStore;
 
   @GetMapping
   public String getAll(@RequestParam(required = false) String name, Model model) {
@@ -30,6 +32,7 @@ public class RegionController {
 
     model.addAttribute("regions", this.regionService.getAll(name));
     model.addAttribute("isActive", "region");
+    model.addAttribute("isAuth", this.getCookie());
     return "region/ajax/index";
     // return "region/index";
   }
@@ -40,6 +43,7 @@ public class RegionController {
 
     model.addAttribute("regions", this.regionService.getAll(name));
     model.addAttribute("isActive", "region");
+    model.addAttribute("isAuth", this.getCookie());
     return "region/ajax/index";
     // return "region/index";
   }
@@ -85,5 +89,9 @@ public class RegionController {
 
     model.addAttribute("region", region);
     return "region/detail";
+  }
+
+  public String getCookie() {
+    return cookiesStore.getCookie();
   }
 }

@@ -1,7 +1,9 @@
 package com.example.client_app.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.client_app.config.CookiesStore;
 import com.example.client_app.entity.Country;
 import com.example.client_app.model.CountryResponse;
 import com.example.client_app.service.CountryService;
@@ -25,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CountryController {
   private CountryService countryService;
   private RegionService regionService;
+  private CookiesStore cookiesStore;
 
   @GetMapping
   public String getAll(@RequestParam(required = false) String name, Model model) {
@@ -32,6 +36,7 @@ public class CountryController {
 
     model.addAttribute("countries", this.countryService.getAll(name));
     model.addAttribute("isActive", "country");
+    model.addAttribute("isAuth", this.getCookie());
     return "country/ajax/index";
   }
 
@@ -79,5 +84,9 @@ public class CountryController {
     
     this.countryService.update(id, country);
     return "redirect:/country";
+  }
+
+  public String getCookie() {
+    return cookiesStore.getCookie();
   }
 }

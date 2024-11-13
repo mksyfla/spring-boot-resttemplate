@@ -42,9 +42,9 @@ public class AuthController {
     return "auth/register";
   }
   
-  @PostMapping("/register")
-  public String signUp(Register register) {
-    this.authService.register(register);
+  @PostMapping("/logout")
+  public String signUp() {
+    this.authService.logout();
     return "redirect:/login";
   }
 }
