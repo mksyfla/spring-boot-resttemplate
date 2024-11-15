@@ -41,6 +41,12 @@ public class AuthController {
     model.addAttribute("register", new Register());
     return "auth/register";
   }
+
+  @PostMapping("/register")
+  public String register(Register register) {
+    this.authService.register(register);
+    return "redirect:/login";
+  }
   
   @PostMapping("/logout")
   public String signUp() {
