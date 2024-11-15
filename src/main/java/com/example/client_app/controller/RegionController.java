@@ -30,7 +30,7 @@ public class RegionController {
   public String getAll(@RequestParam(required = false) String name, Model model) {
     log.info("query parameter: " + name);
 
-    model.addAttribute("regions", this.regionService.getAll(name));
+    model.addAttribute("regions", this.regionService.getAll());
     model.addAttribute("isActive", "region");
     model.addAttribute("isAuth", this.getCookie());
     return "region/ajax/index";
@@ -41,7 +41,7 @@ public class RegionController {
   public String getAllAjax(@RequestParam(required = false) String name, Model model) {
     log.info("query parameter: " + name);
 
-    model.addAttribute("regions", this.regionService.getAll(name));
+    model.addAttribute("regions", this.regionService.getAll());
     model.addAttribute("isActive", "region");
     model.addAttribute("isAuth", this.getCookie());
     return "region/ajax/index";

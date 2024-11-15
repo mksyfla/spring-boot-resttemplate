@@ -9,14 +9,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.client_app.config.CookiesStore;
 import com.example.client_app.entity.Country;
-import com.example.client_app.model.CountryResponse;
-import com.example.client_app.model.WebResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -25,74 +22,59 @@ public class CountryService {
   private RestTemplate restTemplate;
   private CookiesStore cookiesStore;
 
-  public List<CountryResponse> getAll(String name) {
-    name = (name != null) ? name : "";
-
-    WebResponse<List<CountryResponse>> data = this.restTemplate
+  public List<Country> getAll() {
+    return this.restTemplate
       .exchange(
-        "http://localhost:8080/country?name=" + name,
+        "http://localhost:8080/country",
         HttpMethod.GET,
-        new HttpEntity<Country>(this.CookieHeader()),
-        new ParameterizedTypeReference<WebResponse<List<CountryResponse>>>() {}
+        new HttpEntity<>(this.CookieHeader()),
+        new ParameterizedTypeReference<List<Country>>() {}
       )
       .getBody();
-
-    return data.getPayload();
   }
   
-  public CountryResponse create(Country country) {
-    WebResponse<CountryResponse> data = this.restTemplate
+  public Country create(Country country) {
+    return this.restTemplate
       .exchange(
         "http://localhost:8080/country",
         HttpMethod.POST,
         new HttpEntity<Country>(country, this.CookieHeader()),
-        new ParameterizedTypeReference<WebResponse<CountryResponse>>() {}
+        new ParameterizedTypeReference<Country>() {}
       )
       .getBody();
-
-    return data.getPayload();
   }
 
-  public CountryResponse delete(Integer id) {
-    WebResponse<CountryResponse> data = this.restTemplate
+  public Country delete(Integer id) {
+    return this.restTemplate
       .exchange(
         "http://localhost:8080/country/"+id,
         HttpMethod.DELETE,
-        new HttpEntity<Country>(this.CookieHeader()),
-        new ParameterizedTypeReference<WebResponse<CountryResponse>>() {}
+        new HttpEntity<>(this.CookieHeader()),
+        new ParameterizedTypeReference<Country>() {}
       )
       .getBody();
-
-    return data.getPayload();
   }
 
-  public CountryResponse getById(Integer id) {
-    WebResponse<CountryResponse> data = this.restTemplate
+  public Country getById(Integer id) {
+    return this.restTemplate
       .exchange(
         "http://localhost:8080/country/" + id,
         HttpMethod.GET,
-        new HttpEntity<Country>(this.CookieHeader()),
-        new ParameterizedTypeReference<WebResponse<CountryResponse>>() {}
+        new HttpEntity<>(this.CookieHeader()),
+        new ParameterizedTypeReference<Country>() {}
       )
       .getBody();
-
-    return data.getPayload();
   }
 
-  public CountryResponse update(Integer id, Country country) {
-    log.info(country.getCode());
-    log.info(country.getName());
-
-    WebResponse<CountryResponse> data = this.restTemplate
-    .exchange(
-      "http://localhost:8080/country/"+id,
-      HttpMethod.PUT,
-      new HttpEntity<Country>(country, this.CookieHeader()),
-      new ParameterizedTypeReference<WebResponse<CountryResponse>>() {}
-    )
-    .getBody();
-
-    return data.getPayload();
+  public Country update(Integer id, Country country) {
+    return this.restTemplate
+      .exchange(
+        "http://localhost:8080/country/"+id,
+        HttpMethod.PUT,
+        new HttpEntity<Country>(country, this.CookieHeader()),
+        new ParameterizedTypeReference<Country>() {}
+      )
+      .getBody();
   }
 
   public HttpHeaders CookieHeader() {

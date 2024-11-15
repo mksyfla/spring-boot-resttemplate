@@ -11,20 +11,20 @@ $(document).ready(() => {
         data: null,
         render: (data, type, full, meta) => meta.row + 1
       },
-      { data: "countryName" },
-      { data: "countryCode" },
-      { data: "regionName" },
+      { data: "name" },
+      { data: "code" },
+      { data: "region.name" },
       {
         data: null,
         render: (data) => `
           <div class="d-flex justify-content-center gap-3">
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detail-country" onclick=getCountryById(${data.countryId})>
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detail-country" onclick=getCountryById(${data.id})>
               Detail
             </button>
-            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#update-country" onclick=prevCountry(${data.countryId})>
+            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#update-country" onclick=prevCountry(${data.id})>
               Update
             </button>
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-country" onclick=deleteCountry(${data.countryId})>
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-country" onclick=deleteCountry(${data.id})>
               Delete
             </button>
           </div>
@@ -60,11 +60,11 @@ function call() {
 async function prevCountry(id) {
   const settings = new Settings("GET", `/api/country/${id}`, "json", "application/json");
   const res = await requestAjax(settings);
-  const region = await selectRegion(res.regionId);
+  const region = await selectRegion(res.region.id);
 
-  $("#update-id-country").val(res.countryId);
-  $("#update-code-country").val(res.countryCode);
-  $("#update-name-country").val(res.countryName);
+  $("#update-id-country").val(res.id);
+  $("#update-code-country").val(res.code);
+  $("#update-name-country").val(res.name);
   $("#update-region-country").html(region);
 }
 
@@ -78,7 +78,7 @@ $("#update-country-button").click(async (event) => {
   
   if (name === "" || name === null) return;
 
-  const data = JSON.stringify({ id, code, name, regionId });
+  const data = JSON.stringify({ id, code, name, region: { id: regionId } });
 
   const settings = new Settings("PUT", `/api/country/${id}`, "json", "application/json", data);
   await requestAjax(settings);
@@ -115,7 +115,7 @@ $("#create-country-button").click(async (event) => {
   
   if (name === "" || name === null) return;
 
-  const data = JSON.stringify({ code, name, regionId });
+  const data = JSON.stringify({ code, name, region: { id: regionId } });
 
   const settings = new Settings("POST", `/api/country`, "json", "application/json", data);
   await requestAjax(settings);
@@ -179,10 +179,12 @@ async function getCountryById(id) {
   const settings = new Settings("GET", `/api/country/${id}`, "json", "application/json");
   const res = await requestAjax(settings);
 
-  $("#detail-id-country").html(res.countryId);
-  $("#detail-name-country").html(res.countryName);
-  $("#detail-code-country").html(res.countryCode);
-  $("#detail-region-country").html(res.regionName);
+  console.log(res);
+
+  $("#detail-id-country").html(res.id);
+  $("#detail-name-country").html(res.name);
+  $("#detail-code-country").html(res.code);
+  $("#detail-region-country").html(res.region.name);
   $("#detail-action-country").html(`
     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#update-country" onclick=prevCountry(${res.countryId})>
       Update

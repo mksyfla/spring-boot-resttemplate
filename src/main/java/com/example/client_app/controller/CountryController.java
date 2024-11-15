@@ -1,9 +1,7 @@
 package com.example.client_app.controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.client_app.config.CookiesStore;
 import com.example.client_app.entity.Country;
-import com.example.client_app.model.CountryResponse;
 import com.example.client_app.service.CountryService;
 import com.example.client_app.service.RegionService;
 
@@ -34,7 +31,7 @@ public class CountryController {
   public String getAll(@RequestParam(required = false) String name, Model model) {
     log.info("query parameter: " + name);
 
-    model.addAttribute("countries", this.countryService.getAll(name));
+    model.addAttribute("countries", this.countryService.getAll());
     model.addAttribute("isActive", "country");
     model.addAttribute("isAuth", this.getCookie());
     return "country/ajax/index";
@@ -42,7 +39,7 @@ public class CountryController {
 
   @GetMapping("/create")
   public String createView(Model model) {
-    model.addAttribute("regions", this.regionService.getAll(null));
+    model.addAttribute("regions", this.regionService.getAll());
     model.addAttribute("country", new Country());
 
     return "country/create-form";
@@ -68,11 +65,11 @@ public class CountryController {
   
   @GetMapping("/update/{id}")
   public String updateView(@PathVariable Integer id, Model model) {
-    CountryResponse c = this.countryService.getById(id);
-    Country country = new Country(c.getCountryId(), c.getCountryCode(), c.getCountryName(), c.getRegionId());
+    Country c = this.countryService.getById(id);
+    Country country = new Country(c.getId(), c.getCode(), c.getName(), c.getRegion());
 
     model.addAttribute("country", country);
-    model.addAttribute("regions", this.regionService.getAll(null));
+    model.addAttribute("regions", this.regionService.getAll());
     // model.addAttribute("prevCountry", country);
 
     return "country/update-form";

@@ -2,7 +2,6 @@ package com.example.client_app.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.client_app.entity.Country;
-import com.example.client_app.model.CountryResponse;
 import com.example.client_app.service.CountryService;
 
 import lombok.AllArgsConstructor;
@@ -26,27 +24,27 @@ public class RestCountryController {
   private CountryService countryService;
 
   @GetMapping
-  public List<CountryResponse> getAll(@RequestParam(required = false) String name) {
-    return this.countryService.getAll(name);
+  public List<Country> getAll(@RequestParam(required = false) String name) {
+    return this.countryService.getAll();
   }
 
   @PostMapping
-  public CountryResponse create(@RequestBody Country country) {
+  public Country create(@RequestBody Country country) {
     return this.countryService.create(country);
   }
 
   @DeleteMapping("/{id}")
-  public CountryResponse delete(@PathVariable Integer id) {
+  public Country delete(@PathVariable Integer id) {
     return this.countryService.delete(id);
   }
   
   @GetMapping("/{id}")
-  public CountryResponse getById(@PathVariable Integer id) {
+  public Country getById(@PathVariable Integer id) {
     return this.countryService.getById(id);
   }
 
   @PutMapping("/{id}")
-  public CountryResponse update(@PathVariable Integer id, @RequestBody Country country) {
+  public Country update(@PathVariable Integer id, @RequestBody Country country) {
     return this.countryService.update(id, country);
   }
 }

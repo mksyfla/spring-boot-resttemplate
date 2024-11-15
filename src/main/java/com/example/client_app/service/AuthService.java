@@ -13,7 +13,6 @@ import com.example.client_app.entity.Login;
 import com.example.client_app.entity.Register;
 import com.example.client_app.model.LoginResponse;
 import com.example.client_app.model.RegisterResponse;
-import com.example.client_app.model.WebResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,31 +25,30 @@ public class AuthService {
   private CookiesStore cookiesStore;
 
   public LoginResponse login(Login login) {
-    ResponseEntity<WebResponse<LoginResponse>> response = this.restTemplate
+    ResponseEntity<LoginResponse> response = this.restTemplate
       .exchange(
         "http://localhost:8080/login",
         HttpMethod.POST,
         new HttpEntity<Login>(login),
-        new ParameterizedTypeReference<WebResponse<LoginResponse>>() {}
+        new ParameterizedTypeReference<LoginResponse>() {}
       );
     
     String cookie = response.getHeaders().getFirst(HttpHeaders.SET_COOKIE);
+    LoginResponse loginResponse = response.getBody();
 
     cookiesStore.setCookie(cookie);
 
-    return response.getBody().getPayload();
+    return loginResponse;
   }
   
   public RegisterResponse register(Register register) {
-    WebResponse<RegisterResponse> data = this.restTemplate
+    return this.restTemplate
       .exchange(
         "http://localhost:8080/register",
         HttpMethod.POST,
         new HttpEntity<Register>(register),
-        new ParameterizedTypeReference<WebResponse<RegisterResponse>>() {}
+        new ParameterizedTypeReference<RegisterResponse>() {}
       ).getBody();
-
-    return data.getPayload();
   }
   
   public void logout() {
@@ -58,7 +56,7 @@ public class AuthService {
       .exchange(
         "http://localhost:8080/logout",
         HttpMethod.POST,
-        new HttpEntity<Register>(this.CookieHeader()),
+        new HttpEntity<>(this.CookieHeader()),
         new ParameterizedTypeReference<>() {}
       ).getBody();
 

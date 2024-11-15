@@ -29,7 +29,7 @@ public class RestRegionController {
 
   @GetMapping
   public List<Region> getAll(@RequestParam(required = false) String name, Model model) {
-    return this.regionService.getAll(name);
+    return this.regionService.getAll();
   }
 
   @PostMapping
